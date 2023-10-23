@@ -33,7 +33,7 @@ app.get('/friends/:friendId', (req, res) => {
             message: 'NotFound!',
         })
     }
-    // res.send('Test Route');
+    //res.send('Test Route');
 })
 
 app.listen(PORT, () => {
