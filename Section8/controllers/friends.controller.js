@@ -1,4 +1,6 @@
 const friends = require('./../models/friends.model');
+const path = require('path');
+//res.sendFile(path.join("./../public/database.jpg", "database.jpg"));
 
 exports.getAllFriends = (req, res) => {
   res.status(200).json({
