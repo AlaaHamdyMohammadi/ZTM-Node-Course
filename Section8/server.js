@@ -11,6 +11,9 @@ app.use((req, res, next) => {
   console.log(`URL: ${req.method} ${req.baseUrl}${req.url} ${date}ms`);
 });
 
+
+app.use('/site' ,express.static('public'));
+
 //to set req.body to a js object when the content type is slash json
 app.use(express.json());
 
