@@ -1,22 +1,23 @@
 const express = require("express");
 const app = express();
+const friendsController = require('./controllers/friends.controller')
 
 const PORT = 3000;
 
-const friends = [
-  {
-    id: 0,
-    name: "alaa",
-  },
-  {
-    id: 1,
-    name: "hamdy",
-  },
-  {
-    id: 2,
-    name: "mohammadi",
-  },
-];
+// const friends = [
+//   {
+//     id: 0,
+//     name: "alaa",
+//   },
+//   {
+//     id: 1,
+//     name: "hamdy",
+//   },
+//   {
+//     id: 2,
+//     name: "mohammadi",
+//   },
+// ];
 
 app.use((req, res, next) => {
   console.log(`${req.method}, ${req.url}`);
@@ -26,44 +27,11 @@ app.use((req, res, next) => {
 //to set req.body to a js object when the content type is slash json
 app.use(express.json());
 
-app.post('/friends', (req, res) => {
-    if(!req.body.name){
-        return res.status(400).json({
-            status: 'Faild',
-            message: 'Missing Friend Name'
-        })
-    }
-    console.log('req.body is', req.body);
-  const newFriend = { name: req.body.name, id: friends.length };
-  friends.push(newFriend);
+app.post('/friends', friendsController.createNewFriend);
 
-  res.status(200).json({
-    status: "Success",
-    data: newFriend,
-  });
-});
+app.get("/friends", friendsController.getAllFriends);
 
-app.get("/friends", (req, res) => {
-  res.status(200).json({
-    status: "Success",
-    results: friends.length,
-    data: friends,
-  });
-});
-
-app.get("/friends/:friendId", (req, res) => {
-  const friendId = Number(req.params.friendId);
-  const friend = friends[friendId];
-  if (friend) {
-    res.status(200).json(friend);
-  } else {
-    res.status(404).json({
-      status: "Faild",
-      message: "NotFound!",
-    });
-  }
-  //res.send('Test Route');
-});
+app.get("/friends/:friendId", friendsController.getFriend);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
