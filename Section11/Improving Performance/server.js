@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cluster = require('cluster');
+const os = require('os');
 
 function delay(duration){
     const startTime = Date.now();
@@ -24,8 +25,10 @@ app.get('/timer', (req, res) => {
 if(cluster.isMaster){
     // If true the code will execute as master process
     console.log('Master has been started');
-    cluster.fork();
-    cluster.fork();
+    const NUM_WORKERS = os.cpus().length;
+    for(let i = 0; i < NUM_WORKERS; i++){
+        cluster.fork();
+    } 
 }else{
     // else the code will execute as worker process
     console.log('Worker proces started');
