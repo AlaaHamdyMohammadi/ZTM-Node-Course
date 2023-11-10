@@ -5,6 +5,24 @@ const helmet = require("helmet");
 const express = require("express");
 const app = express();
 require('dotenv').config();
+const passport = require('passport');
+const {Strategy} = require('passport-google-oauth20');
+
+
+// Strategy of how passport authenticate users
+const AUTH_OPTIONS = {
+  callbackURL: "/auth/google/callback",
+  clientID: config.CLIENT_ID,
+  clientSecret: config.CLIENT_SECRET,
+};
+
+function verifyCallback(accessToken, refreshToken, profile, done){
+    console.log(`Google Profile: ${profile}`);
+    done(null, profile)
+}
+
+passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
+
 
 const config = {
   CLIENT_ID: process.env.CLIENT_ID,
@@ -12,6 +30,7 @@ const config = {
 };
 
 app.use(helmet());
+app.use(passport.initialize()) //help to set up passport 
 
 function checkLoggedIn(req, res, next) {
   const isLoggedIn = true;
