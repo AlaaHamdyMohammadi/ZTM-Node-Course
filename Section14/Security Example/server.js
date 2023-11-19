@@ -34,12 +34,12 @@ passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 // Save session to cookie
 passport.serializeUser((user, done) => { // To set data into cookie
-    done(null, user) // If no error
+    done(null, user.id) // If no error
 })
 
 // Read session from cookie
-passport.deserializeUser((obj, done) => { // To get data from cookie
-    done(null, obj)
+passport.deserializeUser((id, done) => { // To get data from cookie
+    done(null, id)
 })
 
 app.use(helmet());
