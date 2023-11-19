@@ -81,7 +81,10 @@ app.get(
     console.log("Google called us back");
   }
 );
-app.get("/auth/logout", (req, res) => {});
+app.get("/auth/logout", (req, res) => {
+    req.logout() // Remove req.user and clears any logged in session
+    return res.redirect('/');
+});
 
 app.get("/secret", checkLoggedIn, (req, res) => {
   return res.send("Personal Secret");
