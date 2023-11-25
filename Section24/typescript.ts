@@ -21,3 +21,14 @@ console.log(playerDirection);
 function throwError(message: string): never{
     throw new Error(message);
 };
+
+//interface
+interface RobotArmy{
+    count: number,
+    type: string,
+    magic: string,
+}
+
+function fightRobotArmy(robots: RobotArmy){
+    console.log('Fight')
+}

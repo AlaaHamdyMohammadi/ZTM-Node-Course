@@ -25,3 +25,6 @@ function throwError(message) {
     throw new Error(message);
 }
 ;
+function fightRobotArmy(robots) {
+    console.log('Fight');
+}
