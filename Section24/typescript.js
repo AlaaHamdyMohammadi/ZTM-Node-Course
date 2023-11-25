@@ -1,5 +1,13 @@
-function sum(a, b) {
-    return a + b;
-}
-var answer = sum('hello', 5);
-console.log(answer);
+var eyeColor = 'Black';
+var pets = ['cat', 'dog'];
+//Tuple
+var basket = ["basketball", 10];
+// basket = ['basketball', 10];
+//Enum
+var Size;
+(function (Size) {
+    Size[Size["small"] = 1] = "small";
+    Size[Size["meduim"] = 2] = "meduim";
+})(Size || (Size = {}));
+;
+var sizeName = Size.small;

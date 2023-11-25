@@ -1,6 +1,11 @@
-function sum(a: number, b: number){
-    return a + b;
-}
+let eyeColor: string = 'Black';
 
-const answer = sum('hello',5);
-console.log(answer);
+let pets: string[] = ['cat', 'dog'];
+
+//Tuple
+let basket: [string, number] = ["basketball", 10];
+// basket = ['basketball', 10];
+
+//Enum
+enum Size { small = 1, meduim = 2};
+let sizeName: number = Size.small;
