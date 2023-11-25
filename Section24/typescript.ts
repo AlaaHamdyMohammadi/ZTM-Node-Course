@@ -32,3 +32,6 @@ interface RobotArmy{
 function fightRobotArmy(robots: RobotArmy){
     console.log('Fight')
 }
+
+//Union
+let confused: string | number = 5

@@ -28,3 +28,5 @@ function throwError(message) {
 function fightRobotArmy(robots) {
     console.log('Fight');
 }
+//Union
+var confused = 5;
