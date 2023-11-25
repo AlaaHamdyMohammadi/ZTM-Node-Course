@@ -16,3 +16,8 @@ enum Direction{
 
 let playerDirection = Direction.Down;
 console.log(playerDirection);
+
+//never
+function throwError(message: string): never{
+    throw new Error(message);
+};

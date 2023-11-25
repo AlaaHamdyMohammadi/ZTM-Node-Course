@@ -20,3 +20,8 @@ var Direction;
 })(Direction || (Direction = {}));
 var playerDirection = Direction.Down;
 console.log(playerDirection);
+//never
+function throwError(message) {
+    throw new Error(message);
+}
+;
