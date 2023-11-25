@@ -30,3 +30,5 @@ function fightRobotArmy(robots) {
 }
 //Union
 var confused = 5;
+// let x: number = 5;
+// x = 'hello';

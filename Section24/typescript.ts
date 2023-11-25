@@ -35,3 +35,6 @@ function fightRobotArmy(robots: RobotArmy){
 
 //Union
 let confused: string | number = 5
+
+// let x: number = 5;
+// x = 'hello';
