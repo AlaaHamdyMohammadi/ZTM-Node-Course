@@ -6,7 +6,11 @@ const { loadFilesSync } = require('@graphql-tools/load-files'); // let to read a
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 
-const typesArray = loadFilesSync(path.join(__dirname, '**/*.graphql'));
+// const typesArray = loadFilesSync(path.join(__dirname, '**/*.graphql'));
+
+const typesArray = loadFilesSync("**/*", {
+  extensions: ["graphql"],
+});
 
 const schema = makeExecutableSchema({
   typeDefs: typesArray,
