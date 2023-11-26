@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require("express");
 // const { buildSchema } = require("graphql"); // Allows to create schema
-const { graphqlHTTP } = require("express-graphql"); // Middleware function, which responds to graphql queries
+// const { graphqlHTTP } = require("express-graphql"); // Middleware function, which responds to graphql queries
+
+const { ApolloServer} = require('apollo-server-express');
 const { loadFilesSync } = require('@graphql-tools/load-files'); // let to read any function matching some pattern
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
@@ -14,23 +16,29 @@ const typesArray = loadFilesSync("**/*", {
 
 const resolversArray = loadFilesSync(path.join(__dirname, "**/*.resolvers.js"));
 
-const schema = makeExecutableSchema({
-  typeDefs: typesArray,
- resolvers: resolversArray
-});
+async function startApolloServer(){
+    const app = express();
 
-const app = express();
+    const schema = makeExecutableSchema({
+      typeDefs: typesArray,
+     resolvers: resolversArray
+    });
 
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    graphiql: true,
-  })
-);
+    const server = new ApolloServer({
+        schema
+    })
 
-const PORT = 4000;
+    await server.start(),
+    server.applyMiddleware({app, path: '/graphql'});
 
-app.listen(PORT, () => {
-  console.log(`Running GraphQL server on port ${PORT} ...`);
-});
+    const PORT = 4000;
+    
+    app.listen(PORT, () => {
+      console.log(`Running GraphQL server on port ${PORT} ...`);
+    });
+}
+
+startApolloServer();
+
+
+
