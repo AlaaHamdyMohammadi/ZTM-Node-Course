@@ -2,6 +2,7 @@
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 const socket = io('http://localhost:5000');
+let isReferee = false;
 let paddleIndex = 0;
 
 let width = 500;
@@ -183,30 +184,38 @@ function animate() {
 }
 
 // Start Game, Reset Everything
-function startGame() {
+function loadGame() {
   createCanvas();
   // renderIntro();
   socket.emit('ready');
   
-  paddleIndex = 0;
-  window.requestAnimationFrame(animate);
-  canvas.addEventListener('mousemove', (e) => {
-    playerMoved = true;
-    paddleX[paddleIndex] = e.offsetX;
-    if (paddleX[paddleIndex] < 0) {
-      paddleX[paddleIndex] = 0;
-    }
-    if (paddleX[paddleIndex] > (width - paddleWidth)) {
-      paddleX[paddleIndex] = width - paddleWidth;
-    }
-    // Hide Cursor
-    canvas.style.cursor = 'none';
-  });
+  function startGame(){
+    paddleIndex = 0;
+    window.requestAnimationFrame(animate);
+    canvas.addEventListener("mousemove", (e) => {
+      playerMoved = true;
+      paddleX[paddleIndex] = e.offsetX;
+      if (paddleX[paddleIndex] < 0) {
+        paddleX[paddleIndex] = 0;
+      }
+      if (paddleX[paddleIndex] > width - paddleWidth) {
+        paddleX[paddleIndex] = width - paddleWidth;
+      }
+      // Hide Cursor
+      canvas.style.cursor = "none";
+    });
+  }
 }
 
 // On Load
-startGame();
+loadGame();
 
 socket.on('connect', () => {
   console.log('connected as ..', socket.id)
+})
+
+socket.on('startGame', (refereeId) => {
+  console.log(`Referee is ${refereeId}`);
+  isReferee = socket.id === refereeId;
+  startGame();
 })
