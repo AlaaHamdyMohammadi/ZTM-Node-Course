@@ -13,5 +13,5 @@ server.listen(PORT, () => {
 
 // on function come from event emitter interface that our socket sever uses to register an event listener
 io.on('connection', (socket) => {
-    console.log('user connected');
+    console.log('user connected', socket.id);
 })
