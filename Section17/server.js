@@ -1,33 +1,16 @@
 const express = require("express");
-const { buildSchema } = require("graphql"); // Allows to create schema
+// const { buildSchema } = require("graphql"); // Allows to create schema
 const { graphqlHTTP } = require("express-graphql"); // Middleware function, which responds to graphql queries
+const { loadFilesSync } = require('@graphql-tools/load-files'); // let to read any function matching some pattern
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-// ! => Required
-const schema = buildSchema(`
-    type Query{
-        products: [Product]
-        orders: [Order]
-    }
-    type Product{
-        id: ID!
-        description: String! 
-        reviews: [Review]
-        price: Float!
-    }
-    type Review{
-        rating: Int!
-        comment: String
-    }
-    type Order{
-        date: String!
-        subtotal: Float
-        items: [OrderItem]
-    }
-    type OrderItem{
-        product: Product!
-        quantity: Int!
-    }
-`);
+
+const typesArray = loadFilesSync('**/*.graphql')
+
+const schema = makeExecutableSchema({
+    typeDefs: [schemaText],
+})
+
 
 const root = {
   products: [
